@@ -1,32 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Card, Icon } from 'react-native-elements';
 import { CAMPSITES } from '../shared/campsites';
 import { COMMENTS } from '../shared/comments';
-
-
-function RenderComments({comments}) {
-
-    const renderCommentItem = ({item}) => {
-        return (
-            <View style={{margin: 10}}>
-                <Text style={{fontSize: 14}}>{item.text}</Text>
-                <Text style={{fontSize: 12}}>{item.rating} Stars</Text>
-                <Text style={{fontSize: 12}}>{`-- ${item.author}, ${item.date}`}</Text>
-            </View>
-        );
-    };
-
-    return (
-        <Card title='Comments'>
-            <FlatList
-                data={comments}
-                renderItem={renderCommentItem}
-                keyExtractor={item => item.id.toString()}
-            />
-        </Card>
-    );
-}
 
 
 function RenderCampsite(props) {
@@ -56,6 +32,29 @@ function RenderCampsite(props) {
     return <View />;
 }
 
+function RenderComments({comments}) {
+
+    const renderCommentItem = ({item}) => {
+        return (
+            <View style={{margin: 10}}>
+                <Text style={{fontSize: 14}}>{item.text}</Text>
+                <Text style={{fontSize: 12}}>{item.rating} Stars</Text>
+                <Text style={{fontSize: 12}}>{`-- ${item.author}, ${item.date}`}</Text>
+            </View>
+        );
+    };
+
+    return (
+        <Card title='Comments'>
+            <FlatList
+                data={comments}
+                renderItem={renderCommentItem}
+                keyExtractor={item => item.id.toString()}
+            />
+        </Card>
+    );
+}
+
 class CampsiteInfo extends Component {
 
     constructor(props) {
@@ -81,13 +80,13 @@ class CampsiteInfo extends Component {
         const comments = this.state.comments.filter(comment => comment.campsiteId === campsiteId);
         return (
             <ScrollView>
-                <RenderCampsite campsite={campsite} 
+                    <RenderCampsite campsite={campsite}
                     favorite={this.state.favorite}
-                    markFavorite={() => this.markFavorite()}/>
-                <RenderComments comments={comments} />
+                    markFavorite={() => this.markFavorite()}
+                    />                
+                    <RenderComments comments={comments} />
             </ScrollView>
-        );
-    }
+        );    }
 }
 
 export default CampsiteInfo;
